@@ -12,11 +12,11 @@ predictor_path = "model/shape_predictor_68_face_landmarks.dat"
 face_rec_model_path = "model/dlib_face_recognition_resnet_model_v1.dat"
 # 加载模型
 # 人脸检测
-detector = dlib.get_frontal_face_detector()
+detector = dlib.get_frontal_face_detector() # type: ignore
 # 关键点检测
-sp = dlib.shape_predictor(predictor_path)
+sp = dlib.shape_predictor(predictor_path) # type: ignore
 # 编码
-facerec = dlib.face_recognition_model_v1(face_rec_model_path)
+facerec = dlib.face_recognition_model_v1(face_rec_model_path) # type: ignore
 
 # 实例化YOLO模型并将其移动到设备上
 model = YOLO('model/yolov8l-face.pt')
@@ -25,14 +25,14 @@ model = YOLO('model/yolov8l-face.pt')
 faker = Faker(locale='zh_CN')
 
 # 打开视频文件并获取视频参数
-video_path = "media/00009.MTS"
+video_path = "media/input.mp4"
 cap = cv2.VideoCapture(video_path)
 fps = cap.get(cv2.CAP_PROP_FPS)
 size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
 
 # 设置输出视频参数
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-out = cv2.VideoWriter('result/Student.mp4', fourcc, fps, size, True)
+out = cv2.VideoWriter('result/students.mp4', fourcc, fps, size, True)
 
 
 # 判断人脸照片是否有特征
@@ -150,9 +150,9 @@ while cap.isOpened():
 
         track_ids = []
         # 得到该帧的各个目标的ID
-        if results[0].boxes.id is not None and len(results) > 0:
+        if results[0].boxes.id is not None and len(results) > 0: # type: ignore
             # print(results[0].boxes.id)
-            for element in results[0].boxes.id:
+            for element in results[0].boxes.id: # type: ignore
                 # 如果id没在字典里则调用faker方法
                 if element.item() not in nameBox.keys():
                     # print(element.item())
@@ -168,7 +168,7 @@ while cap.isOpened():
         # 复制原图像
         frame_copy = frame.copy()
         # 遍历该帧的所有目标
-        for track_id, box in zip(track_ids, results[0].boxes.data):
+        for track_id, box in zip(track_ids, results[0].boxes.data):# type: ignore
             track_id_number, person_name = track_id
             frame = box_label(frame_copy, track_id_number, frame, box, str(person_name), (255, 255, 255))
 

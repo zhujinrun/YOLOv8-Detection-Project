@@ -19,3 +19,13 @@
 > 基于yolov8开发出的识别系统，实现原理与上面差不多
 
 ![](img/3.png)
+
+## 操作记录
+
+```bash
+# 1. 导出 conda 环境（最全，含非 Python 库）
+conda env export > environment.yml
+# 2. 导出纯 pip requirements（给 pip 用户）
+pip list --format=freeze > requirements.txt
+```
+

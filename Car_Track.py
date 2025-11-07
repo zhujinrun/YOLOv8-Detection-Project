@@ -54,12 +54,12 @@ while cap.isOpened():
 
         track_ids = []
         # 得到该帧的各个目标的ID
-        if results[0].boxes.id is not None and len(results) > 0:
-            for element in results[0].boxes.id:
+        if results[0].boxes.id is not None and len(results) > 0: # type: ignore
+            for element in results[0].boxes.id: # type: ignore
                 track_ids.append(int(element.item()))
 
         # 遍历该帧的所有目标
-        for track_id, box in zip(track_ids, results[0].boxes.data):
+        for track_id, box in zip(track_ids, results[0].boxes.data): # type: ignore
             # 当车辆走进一定范围内再开始识别
             # 这里其实主要是为了消除割裂感
             if box[:4][1] + 300 > 350:
